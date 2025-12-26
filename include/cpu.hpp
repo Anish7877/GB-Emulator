@@ -12,6 +12,7 @@ class CPU {
                 explicit CPU();
                 void connect_to_bus(const std::shared_ptr<Bus>& bus);
                 void step();
+        private:
                 // note every ldh uses little endian address
                 std::uint8_t fetch_byte();
                 std::uint16_t fetch_word();

@@ -1,7 +1,6 @@
 #include "../include/cpu.hpp"
 #include "../include/bus.hpp"
 #include <iostream>
-#include <utility>
 
 CPU::CPU(){
         lookup_table.resize(256);

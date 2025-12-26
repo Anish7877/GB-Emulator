@@ -57,12 +57,12 @@ std::uint8_t Cartridge::read(std::uint16_t addr){
         if (addr >= 0xA000 && addr <= 0xBFFF) {
                 if (!ram_enabled) return 0xFF;
                 std::uint32_t current_ram_bank{0};
-                if (banking_mode == 1) {
+                if (banking_mode == 1){
                         current_ram_bank = ram_bank_value;
                 }
 
                 std::size_t offset{static_cast<std::size_t>((current_ram_bank * 0x2000) + (addr - 0xA000))};
-                if (offset < eram.size()) {
+                if (offset < eram.size()){
                         return eram[offset];
                 }
         }
@@ -93,12 +93,11 @@ bool Cartridge::write(std::uint16_t addr, std::uint8_t data){
                         if (banking_mode == 1) {
                                 current_ram_bank = ram_bank_value;
                         }
-
                         std::size_t offset = (current_ram_bank * 0x2000) + (addr - 0xA000);
-
                         if(offset < eram.size()){
                                 eram[offset] = data;
-                        }                }
+                        }
+                }
                 return true;
         }
         return false;

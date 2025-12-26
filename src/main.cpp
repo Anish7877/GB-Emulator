@@ -11,9 +11,8 @@ int main(void){
         cartridge->load("/home/anish/Downloads/gameboy/Super Mario Land (World) (Rev 1).gb");
         bus->insert_cartridge(cartridge);
         cpu.connect_to_bus(bus);
-        while(true){
-                char c{};
-                std::cin >> c;
+        int step{10};
+        while(step--){
                 cpu.step();
         }
         return 0;
