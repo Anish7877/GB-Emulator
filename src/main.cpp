@@ -1,6 +1,7 @@
 #include "../include/cpu.hpp"
 #include "../include/bus.hpp"
 #include "../include/cartridge.hpp"
+#include <iostream>
 #include <memory>
 
 int main(void){
@@ -11,6 +12,8 @@ int main(void){
         bus->insert_cartridge(cartridge);
         cpu.connect_to_bus(bus);
         while(true){
+                char c{};
+                std::cin >> c;
                 cpu.step();
         }
         return 0;
