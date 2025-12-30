@@ -596,7 +596,7 @@ class CPU {
                 std::shared_ptr<Bus> bus{};
                 struct OpCodeHandler{
                         std::uint8_t cycles{};
-                        std::string mneomic{};
+                        std::string mnemonic{};
                         std::function<void()> execute{};
                 };
                 std::vector<OpCodeHandler> lookup_table{};

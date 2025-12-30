@@ -1,6 +1,7 @@
 #ifndef CARTRIDGE_HPP
 #define CARTRIDGE_HPP
 #include <cstdint>
+#include <string>
 #include <vector>
 #include <string_view>
 class Cartridge {
@@ -9,6 +10,12 @@ class Cartridge {
                 bool load(std::string_view path);
                 std::uint8_t read(std::uint16_t addr);
                 bool write(std::uint16_t addr, std::uint8_t data);
+                std::string get_cartridge_title() const {return title;}
+                std::uint8_t get_cgb_flag() const {return cgb_flag;}
+                std::uint8_t get_cartridge_type() const {return cartridge_type;}
+                std::size_t get_rom_size() const {return rom_size;}
+                std::uint8_t get_checksum() const {return checksum;}
+
         private:
                 std::vector<std::uint8_t> rom{};
                 std::vector<std::uint8_t> eram{};
@@ -24,5 +31,11 @@ class Cartridge {
                 bool banking_mode{false};
 
                 void setup_tables();
+
+                std::string title{};
+                std::uint8_t cgb_flag{};
+                std::uint8_t cartridge_type{};
+                std::size_t rom_size{};
+                std::uint8_t checksum{};
 };
 #endif

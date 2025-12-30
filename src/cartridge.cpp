@@ -15,6 +15,13 @@ bool Cartridge::load(std::string_view path){
                 return false;
         }
         setup_tables();
+        for(int i{0x134};i<=0x142;++i){
+                title.push_back(static_cast<char>(rom[i]));
+        }
+        cgb_flag = rom[0x143];
+        cartridge_type = rom[0x147];
+        rom_size = 32 * (1 << rom[0x148]);
+        checksum = rom[0x14D];
         return true;
 }
 
