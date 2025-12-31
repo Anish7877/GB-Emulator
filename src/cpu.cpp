@@ -1,6 +1,8 @@
 #include "../include/cpu.hpp"
 #include "../include/bus.hpp"
+#include "../include/ppu.hpp"
 #include <iostream>
+#include <memory>
 
 CPU::CPU(){
         lookup_table.resize(256);
@@ -526,7 +528,18 @@ void CPU::connect_to_bus(const std::shared_ptr<Bus>& bus){
         this->bus = bus;
 }
 
-void CPU::step(){
+void CPU::connect_to_ppu(const std::shared_ptr<PPU>& ppu){
+        this->ppu = ppu;
+}
+
+unsigned int CPU::step(){
+        handle_interrupt();
+
+        if(is_halted){
+                update_timers(4);
+                ppu->tick(4);
+                return 0;
+        }
         if(enable_interrupt_next_cycle){
                 enable_interrupt_next_cycle = false;
                 interrupt_master_enable = true;
@@ -540,7 +553,7 @@ void CPU::step(){
                 update_timers(lookup_table[op_code].cycles);
         }
         lookup_table[op_code].execute();
-        handle_interrupt();
+        return lookup_table[op_code].cycles;
 }
 
 void CPU::handle_interrupt(){
@@ -558,6 +571,8 @@ void CPU::handle_interrupt(){
                                 push_word(pc);
                                 // jump to vector address
                                 pc = 0x40 + i*8;
+                                update_timers(20);
+                                is_halted = false;
                                 return;
                         }
                 }

@@ -71,7 +71,7 @@ bool Bus::write(std::uint16_t addr, std::uint8_t data){
         }
         else if(addr >= 0xFF00 && addr <= 0xFF7F){
                 if(addr == 0xFF04){
-                        io_registers[addr-0xFF04] = 0;
+                        io_registers[4] = 0;
                         return true;
                 }
                 io_registers[addr-0xFF00] = data;
